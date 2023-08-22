@@ -14,13 +14,13 @@ const Home = () => {
   }, []);
 
   const getPosts = async () => {
-    const response = await fetch('http://localhost:5000/getBlog');
+    const response = await fetch('https://blog-backend-zuuz.onrender.com/getBlog');
     const data = await response.json();
     setPosts(data);
   };
 
   const deletePost = async (id) => {
-    const response = await fetch(`http://localhost:5000/delete/${id}`, {
+    const response = await fetch(`https://blog-backend-zuuz.onrender.com/delete/${id}`, {
       method: 'DELETE',
     });
     if (response.status === 200) {
@@ -32,7 +32,7 @@ const Home = () => {
   };
 
   const updatePost = async (id) => {
-    const response = await fetch(`http://localhost:5000/update/${id}`, {
+    const response = await fetch(`https://blog-backend-zuuz.onrender.com/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
