@@ -1,14 +1,18 @@
-const express = require('express')
-const app = express()
-const port = 5000;
-const BlogPost = require("./model/BlogPost");
+require('dotenv').config();
 
-const cors = require('cors')
-const {connectDb} = require('./Db')
-//middlewares
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 5000;
+const BlogPost = require('./model/BlogPost');
+const cors = require('cors');
+const { connectDb } = require('./Db');
+
+// Middlewares
 app.use(express.json());
 app.use(cors());
-connectDb()
+
+// Database connection
+connectDb();
 
 //routes
 app.post('/postblog',async (req,res)=>{ 
@@ -72,8 +76,13 @@ app.put('/update/:id', async (req, res) => {
 })
 
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal server error' });
+});
 
-//listen
-app.listen(port,()=>{
-console.log(`server is running on ${port}`)
-})
+// Listen
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
